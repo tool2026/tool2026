@@ -3,11 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>منصة الأدوات الذكية - الخدمات السريعة</title>
+    <title>منصة الأدوات الذكية - جميع الخدمات</title>
     <style>
         :root {
             --primary-color: #2563eb;
             --primary-hover: #1d4ed8;
+            --success-color: #10b981;
+            --danger-color: #ef4444;
+            --warning-color: #f59e0b;
             --bg-color: #f8fafc;
             --card-bg: #ffffff;
             --text-main: #1e293b;
@@ -33,21 +36,23 @@
             text-align: center;
             margin-bottom: 40px;
             padding: 20px 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 20px;
+            color: white;
         }
 
         header h1 {
-            color: var(--primary-color);
             font-size: 2.5rem;
             margin-bottom: 10px;
         }
 
         header p {
-            color: var(--text-muted);
             font-size: 1.1rem;
+            opacity: 0.9;
         }
 
         .container {
-            max-width: 1000px;
+            max-width: 1200px;
             margin: 0 auto;
         }
 
@@ -83,14 +88,14 @@
         }
 
         .service-card h3 {
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             margin-bottom: 10px;
             color: var(--text-main);
         }
 
         .service-card p {
             color: var(--text-muted);
-            font-size: 0.95rem;
+            font-size: 0.85rem;
         }
 
         /* نافذة الخدمة النشطة */
@@ -168,6 +173,15 @@
             display: none;
         }
 
+        .copy-btn {
+            background-color: var(--success-color);
+            margin-top: 10px;
+        }
+
+        .copy-btn:hover {
+            background-color: #059669;
+        }
+
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
@@ -191,12 +205,11 @@
 
     <div class="container">
         <header>
-            <h1>منصة الأدوات والخدمات الذكية</h1>
+            <h1>🌟 منصة الأدوات والخدمات الذكية</h1>
             <p>اختر الأداة التي تحتاجها من القائمة بالأسفل لتبدأ استخدامها فوراً</p>
         </header>
 
         <div class="services-grid">
-            
             <div class="service-card" onclick="openTool('age-tool')">
                 <span class="icon">📅</span>
                 <h3>حاسبة العمر الدقيقة</h3>
@@ -221,8 +234,56 @@
                 <p>اكتشف هل وزنك مثالي وصحي أم تحتاج للتعديل.</p>
             </div>
 
+            <div class="service-card" onclick="openTool('currency-tool')">
+                <span class="icon">💱</span>
+                <h3>محول العملات</h3>
+                <p>حوّل بين مختلف العملات العالمية بسهولة.</p>
+            </div>
+
+            <div class="service-card" onclick="openTool('unit-tool')">
+                <span class="icon">📏</span>
+                <h3>محول الوحدات</h3>
+                <p>حوّل بين وحدات الطول والوزن والحجم.</p>
+            </div>
+
+            <div class="service-card" onclick="openTool('time-tool')">
+                <span class="icon">⏰</span>
+                <h3>مؤقت العد التنازلي</h3>
+                <p>اضبط مؤقتاً للعد التنازلي لوقت محدد.</p>
+            </div>
+
+            <div class="service-card" onclick="openTool('random-tool')">
+                <span class="icon">🎲</span>
+                <h3>مولد أرقام عشوائية</h3>
+                <p>ولّد أرقاماً عشوائية ضمن نطاق محدد.</p>
+            </div>
+
+            <div class="service-card" onclick="openTool('color-tool')">
+                <span class="icon">🎨</span>
+                <h3>منتقي الألوان</h3>
+                <p>اختر لونك المفضل واحصل على قيم RGB وHEX.</p>
+            </div>
+
+            <div class="service-card" onclick="openTool('calc-tool')">
+                <span class="icon">🧮</span>
+                <h3>آلة حاسبة متقدمة</h3>
+                <p>آلة حاسبة بسيطة للعمليات الأساسية.</p>
+            </div>
+
+            <div class="service-card" onclick="openTool('qrcode-tool')">
+                <span class="icon">📱</span>
+                <h3>مولد رمز QR</h3>
+                <p>حوّل النصوص والروابط إلى رموز QR قابلة للمسح.</p>
+            </div>
+
+            <div class="service-card" onclick="openTool('weather-tool')">
+                <span class="icon">🌤️</span>
+                <h3>حالة الطقس</h3>
+                <p>اعرف حالة الطقس في مدينتك (بيانات تجريبية).</p>
+            </div>
         </div>
 
+        <!-- باقي الأدوات -->
         <div id="age-tool" class="tool-section">
             <h2>📅 حاسبة العمر الدقيقة</h2>
             <div class="input-group">
@@ -268,103 +329,250 @@
             <div id="bmi-result" class="result-box"></div>
         </div>
 
+        <div id="currency-tool" class="tool-section">
+            <h2>💱 محول العملات</h2>
+            <div class="input-group">
+                <label>المبلغ:</label>
+                <input type="number" id="amount" placeholder="أدخل المبلغ">
+            </div>
+            <div class="input-group">
+                <label>من العملة:</label>
+                <select id="from-currency">
+                    <option value="USD">دولار أمريكي (USD)</option>
+                    <option value="EUR">يورو (EUR)</option>
+                    <option value="SAR">ريال سعودي (SAR)</option>
+                    <option value="EGP">جنيه مصري (EGP)</option>
+                </select>
+            </div>
+            <div class="input-group">
+                <label>إلى العملة:</label>
+                <select id="to-currency">
+                    <option value="USD">دولار أمريكي (USD)</option>
+                    <option value="EUR">يورو (EUR)</option>
+                    <option value="SAR">ريال سعودي (SAR)</option>
+                    <option value="EGP">جنيه مصري (EGP)</option>
+                </select>
+            </div>
+            <button onclick="convertCurrency()">حول العملة</button>
+            <div id="currency-result" class="result-box"></div>
+        </div>
+
+        <div id="unit-tool" class="tool-section">
+            <h2>📏 محول الوحدات</h2>
+            <div class="input-group">
+                <label>القيمة:</label>
+                <input type="number" id="unit-value" placeholder="أدخل القيمة">
+            </div>
+            <div class="input-group">
+                <label>نوع التحويل:</label>
+                <select id="unit-type">
+                    <option value="meter">متر إلى قدم</option>
+                    <option value="kg">كيلوجرام إلى باوند</option>
+                    <option value="liter">لتر إلى جالون</option>
+                </select>
+            </div>
+            <button onclick="convertUnit()">حول الوحدة</button>
+            <div id="unit-result" class="result-box"></div>
+        </div>
+
+        <div id="time-tool" class="tool-section">
+            <h2>⏰ مؤقت العد التنازلي</h2>
+            <div class="input-group">
+                <label>الوقت بالثواني:</label>
+                <input type="number" id="timer-seconds" placeholder="أدخل عدد الثواني">
+            </div>
+            <button onclick="startTimer()">ابدأ المؤقت</button>
+            <div id="timer-result" class="result-box" style="font-size: 24px; text-align: center;"></div>
+        </div>
+
+        <div id="random-tool" class="tool-section">
+            <h2>🎲 مولد أرقام عشوائية</h2>
+            <div class="input-group">
+                <label>الحد الأدنى:</label>
+                <input type="number" id="min-num" value="1">
+            </div>
+            <div class="input-group">
+                <label>الحد الأقصى:</label>
+                <input type="number" id="max-num" value="100">
+            </div>
+            <button onclick="generateRandom()">ولّد رقم عشوائي</button>
+            <div id="random-result" class="result-box" style="text-align: center; font-size: 32px;"></div>
+        </div>
+
+        <div id="color-tool" class="tool-section">
+            <h2>🎨 منتقي الألوان</h2>
+            <div class="input-group">
+                <label>اختر لون:</label>
+                <input type="color" id="color-picker" onchange="updateColor()">
+            </div>
+            <div id="color-result" class="result-box"></div>
+        </div>
+
+        <div id="calc-tool" class="tool-section">
+            <h2>🧮 آلة حاسبة متقدمة</h2>
+            <div class="input-group">
+                <input type="text" id="calc-input" placeholder="أدخل العملية (مثال: 2+3*4)" style="text-align: left;">
+            </div>
+            <button onclick="calculateExpression()">احسب</button>
+            <div id="calc-result" class="result-box"></div>
+        </div>
+
+        <div id="qrcode-tool" class="tool-section">
+            <h2>📱 مولد رمز QR</h2>
+            <div class="input-group">
+                <label>النص أو الرابط:</label>
+                <input type="text" id="qr-text" placeholder="أدخل النص أو الرابط">
+            </div>
+            <button onclick="generateQR()">ولّد رمز QR</button>
+            <div id="qr-result" class="result-box" style="text-align: center;"></div>
+        </div>
+
+        <div id="weather-tool" class="tool-section">
+            <h2>🌤️ حالة الطقس</h2>
+            <div class="input-group">
+                <label>اسم المدينة:</label>
+                <input type="text" id="city-name" placeholder="مثال: القاهرة">
+            </div>
+            <button onclick="getWeather()">اعرف حالة الطقس</button>
+            <div id="weather-result" class="result-box"></div>
+        </div>
+
         <footer>
             <p>جميع الحقوق محفوظة © منصة الأدوات الذكية 2026</p>
         </footer>
     </div>
 
     <script>
-        // دالة التنقل بين الأدوات
         function openTool(toolId) {
             const sections = document.querySelectorAll('.tool-section');
             sections.forEach(section => section.classList.remove('active'));
-            
             const activeSection = document.getElementById(toolId);
             activeSection.classList.add('active');
-            
             activeSection.scrollIntoView({ behavior: 'smooth' });
         }
 
-        // 1. منطق حاسبة العمر
         function calculateAge() {
             const birthDateInput = document.getElementById('birth-date').value;
             const resultBox = document.getElementById('age-result');
-            
             if (!birthDateInput) {
                 resultBox.style.display = 'block';
                 resultBox.innerHTML = 'الرجاء اختيار تاريخ ميلاد صحيح.';
                 return;
             }
-
             const birthDate = new Date(birthDateInput);
             const today = new Date();
-
             let years = today.getFullYear() - birthDate.getFullYear();
             let months = today.getMonth() - birthDate.getMonth();
             let days = today.getDate() - birthDate.getDate();
-
-            if (days < 0) {
-                months--;
-                days += new Date(today.getFullYear(), today.getMonth(), 0).getDate();
-            }
-            if (months < 0) {
-                years--;
-                months += 12;
-            }
-
+            if (days < 0) { months--; days += new Date(today.getFullYear(), today.getMonth(), 0).getDate(); }
+            if (months < 0) { years--; months += 12; }
             resultBox.style.display = 'block';
             resultBox.innerHTML = `عمرك الحالي هو: <strong>${years}</strong> سنة، و <strong>${months}</strong> شهر، و <strong>${days}</strong> يوم.`;
         }
 
-        // 2. منطق مولد كلمات المرور
         function generatePassword() {
             const length = document.getElementById('pass-length').value;
             const resultBox = document.getElementById('password-result');
             const chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+";
             let password = "";
-            
-            for (let i = 0; i < length; i++) {
-                password += chars.charAt(Math.floor(Math.random() * chars.length));
-            }
-            
+            for (let i = 0; i < length; i++) password += chars.charAt(Math.floor(Math.random() * chars.length));
             resultBox.style.display = 'block';
             resultBox.innerText = password;
         }
 
-        // 3. منطق عداد النصوص
         function analyzeText() {
             const text = document.getElementById('text-input').value;
-            const charCount = text.length;
-            const wordCount = text.trim() === "" ? 0 : text.trim().split(/\s+/).length;
-            
-            document.getElementById('char-count').innerText = charCount;
-            document.getElementById('word-count').innerText = wordCount;
+            document.getElementById('char-count').innerText = text.length;
+            document.getElementById('word-count').innerText = text.trim() === "" ? 0 : text.trim().split(/\s+/).length;
         }
 
-        // 4. منطق حاسبة كتلة الجسم BMI
         function calculateBMI() {
             const weight = parseFloat(document.getElementById('bmi-weight').value);
             const height = parseFloat(document.getElementById('bmi-height').value) / 100;
             const resultBox = document.getElementById('bmi-result');
-
-            if (!weight || !height) {
-                resultBox.style.display = 'block';
-                resultBox.innerHTML = 'الرجاء إدخال الوزن والطول بشكل صحيح.';
-                return;
-            }
-
+            if (!weight || !height) { resultBox.style.display = 'block'; resultBox.innerHTML = 'الرجاء إدخال الوزن والطول بشكل صحيح.'; return; }
             const bmi = (weight / (height * height)).toFixed(1);
-            let status = "";
-
-            if (bmi < 18.5) status = "نقص في الوزن (نحافة)";
-            else if (bmi >= 18.5 && bmi < 25) status = "وزن مثالي وصحي 👍";
-            else if (bmi >= 25 && bmi < 30) status = "وزن زائد";
-            else status = "سمنة";
-
+            let status = bmi < 18.5 ? "نقص في الوزن (نحافة)" : bmi < 25 ? "وزن مثالي وصحي 👍" : bmi < 30 ? "وزن زائد" : "سمنة";
             resultBox.style.display = 'block';
             resultBox.innerHTML = `مؤشر كتلة جسمك هو: <strong>${bmi}</strong> (${status})`;
         }
+
+        function convertCurrency() {
+            const amount = parseFloat(document.getElementById('amount').value);
+            const from = document.getElementById('from-currency').value;
+            const to = document.getElementById('to-currency').value;
+            const rates = { USD: 1, EUR: 0.92, SAR: 3.75, EGP: 30.5 };
+            const result = (amount / rates[from]) * rates[to];
+            document.getElementById('currency-result').style.display = 'block';
+            document.getElementById('currency-result').innerHTML = `${amount} ${from} = <strong>${result.toFixed(2)}</strong> ${to}`;
+        }
+
+        function convertUnit() {
+            const value = parseFloat(document.getElementById('unit-value').value);
+            const type = document.getElementById('unit-type').value;
+            let result;
+            if (type === 'meter') result = value * 3.28084;
+            else if (type === 'kg') result = value * 2.20462;
+            else result = value * 0.264172;
+            document.getElementById('unit-result').style.display = 'block';
+            document.getElementById('unit-result').innerHTML = `النتيجة: <strong>${result.toFixed(2)}</strong>`;
+        }
+
+        let timerInterval;
+        function startTimer() {
+            if (timerInterval) clearInterval(timerInterval);
+            let seconds = parseInt(document.getElementById('timer-seconds').value);
+            const resultBox = document.getElementById('timer-result');
+            if (isNaN(seconds) || seconds <= 0) { resultBox.innerHTML = 'الرجاء إدخال وقت صحيح'; resultBox.style.display = 'block'; return; }
+            timerInterval = setInterval(() => {
+                if (seconds <= 0) { clearInterval(timerInterval); resultBox.innerHTML = 'انتهى الوقت!'; return; }
+                resultBox.innerHTML = `⏰ ${seconds} ثانية متبقية`;
+                seconds--;
+            }, 1000);
+        }
+
+        function generateRandom() {
+            const min = parseInt(document.getElementById('min-num').value);
+            const max = parseInt(document.getElementById('max-num').value);
+            const random = Math.floor(Math.random() * (max - min + 1)) + min;
+            document.getElementById('random-result').style.display = 'block';
+            document.getElementById('random-result').innerHTML = `<strong>${random}</strong>`;
+        }
+
+        function updateColor() {
+            const color = document.getElementById('color-picker').value;
+            const rgb = parseInt(color.slice(1), 16);
+            const r = (rgb >> 16) & 0xff;
+            const g = (rgb >> 8) & 0xff;
+            const b = rgb & 0xff;
+            document.getElementById('color-result').style.display = 'block';
+            document.getElementById('color-result').innerHTML = `HEX: ${color}<br>RGB: (${r}, ${g}, ${b})`;
+            document.getElementById('color-result').style.backgroundColor = color;
+        }
+
+        function calculateExpression() {
+            const expr = document.getElementById('calc-input').value;
+            try {
+                const result = eval(expr);
+                document.getElementById('calc-result').style.display = 'block';
+                document.getElementById('calc-result').innerHTML = `النتيجة: <strong>${result}</strong>`;
+            } catch(e) { alert('عملية غير صالحة'); }
+        }
+
+        function generateQR() {
+            const text = document.getElementById('qr-text').value;
+            if (!text) { alert('الرجاء إدخال نص أو رابط'); return; }
+            const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(text)}`;
+            document.getElementById('qr-result').style.display = 'block';
+            document.getElementById('qr-result').innerHTML = `<img src="${qrUrl}" alt="QR Code">`;
+        }
+
+        function getWeather() {
+            const city = document.getElementById('city-name').value;
+            if (!city) { alert('الرجاء إدخال اسم المدينة'); return; }
+            document.getElementById('weather-result').style.display = 'block';
+            document.getElementById('weather-result').innerHTML = `🌡️ درجة الحرارة في ${city}: 22°C ☀️<br>الرطوبة: 55% 🌊<br>الرياح: 12 كم/ساعة 💨`;
+        }
     </script>
 </body>
-</html>
- 
+</html> 
