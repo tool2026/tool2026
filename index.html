@@ -1,164 +1,370 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>حاسبة العمر المتقدمة</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>منصة الأدوات الذكية - الخدمات السريعة</title>
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --primary-hover: #1d4ed8;
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+        }
 
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
 
-<style>
-body {
-    font-family: 'Cairo', sans-serif;
-    background: linear-gradient(135deg, #141E30, #243B55);
-    color: #fff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
-}
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            padding: 20px;
+            line-height: 1.6;
+        }
 
-.container {
-    background: rgba(255,255,255,0.08);
-    backdrop-filter: blur(12px);
-    padding: 30px;
-    border-radius: 20px;
-    width: 95%;
-    max-width: 420px;
-    text-align: center;
-}
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 20px 0;
+        }
 
-select, input, button {
-    width: 100%;
-    padding: 12px;
-    margin: 10px 0;
-    border-radius: 10px;
-    border: none;
-    font-size: 16px;
-}
+        header h1 {
+            color: var(--primary-color);
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
 
-button {
-    background: #00c6ff;
-    color: #000;
-    font-size: 18px;
-    cursor: pointer;
-}
+        header p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+        }
 
-button:hover {
-    background: #00a2cc;
-}
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
 
-.result {
-    margin-top: 20px;
-    padding: 15px;
-    border-radius: 15px;
-    background: rgba(0,0,0,0.3);
-}
+        /* شبكة الخدمات */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
 
-.box {
-    margin: 10px 0;
-}
-</style>
+        .service-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 25px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            border-color: var(--primary-color);
+        }
+
+        .service-card .icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            display: inline-block;
+        }
+
+        .service-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: var(--text-main);
+        }
+
+        .service-card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        /* نافذة الخدمة النشطة */
+        .tool-section {
+            display: none;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            margin-top: 30px;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .tool-section.active {
+            display: block;
+        }
+
+        .tool-section h2 {
+            margin-bottom: 20px;
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 10px;
+        }
+
+        /* عناصر الإدخال والأزرار */
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            border-color: var(--primary-color);
+        }
+
+        button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+            font-weight: 600;
+            transition: background-color 0.2s;
+        }
+
+        button:hover {
+            background-color: var(--primary-hover);
+        }
+
+        .result-box {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #eff6ff;
+            border-right: 4px solid var(--primary-color);
+            border-radius: 4px;
+            font-size: 1.1rem;
+            display: none;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 60px;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 600px) {
+            body { padding: 10px; }
+            header h1 { font-size: 2rem; }
+            .tool-section { padding: 20px; }
+        }
+    </style>
 </head>
-
 <body>
 
-<div class="container">
-    <h2>📅 حاسبة العمر</h2>
+    <div class="container">
+        <header>
+            <h1>منصة الأدوات والخدمات الذكية</h1>
+            <p>اختر الأداة التي تحتاجها من القائمة بالأسفل لتبدأ استخدامها فوراً</p>
+        </header>
 
-    <select id="type" onchange="toggleInputs()">
-        <option value="gregorian">📅 ميلادي</option>
-        <option value="hijri">🌙 هجري</option>
-    </select>
+        <div class="services-grid">
+            
+            <div class="service-card" onclick="openTool('age-tool')">
+                <span class="icon">📅</span>
+                <h3>حاسبة العمر الدقيقة</h3>
+                <p>احسب عمرك بالسنوات، الأشهر، والأيام بالتفصيل.</p>
+            </div>
 
-    <!-- ميلادي -->
-    <input type="date" id="gregorianInput">
+            <div class="service-card" onclick="openTool('password-tool')">
+                <span class="icon">🔒</span>
+                <h3>مولد كلمات المرور</h3>
+                <p>أنشئ كلمة مرور قوية وغير قابلة للاختراق بكبسة زر.</p>
+            </div>
 
-    <!-- هجري -->
-    <input type="number" id="hYear" placeholder="السنة الهجرية" style="display:none;">
-    <input type="number" id="hMonth" placeholder="الشهر (1-12)" style="display:none;">
-    <input type="number" id="hDay" placeholder="اليوم (1-30)" style="display:none;">
+            <div class="service-card" onclick="openTool('text-tool')">
+                <span class="icon">✍️</span>
+                <h3>عداد الحروف والكلمات</h3>
+                <p>احسب عدد الكلمات والحروف ونظف النصوص بسهولة.</p>
+            </div>
 
-    <button onclick="calculate()">احسب العمر</button>
+            <div class="service-card" onclick="openTool('bmi-tool')">
+                <span class="icon">⚖️</span>
+                <h3>حاسبة كتلة الجسم (BMI)</h3>
+                <p>اكتشف هل وزنك مثالي وصحي أم تحتاج للتعديل.</p>
+            </div>
 
-    <div class="result" id="result" style="display:none;">
-        <div class="box" id="gResult"></div>
-        <div class="box" id="hResult"></div>
+        </div>
+
+        <div id="age-tool" class="tool-section">
+            <h2>📅 حاسبة العمر الدقيقة</h2>
+            <div class="input-group">
+                <label for="birth-date">اختر تاريخ ميلادك:</label>
+                <input type="date" id="birth-date">
+            </div>
+            <button onclick="calculateAge()">احسب العمر الآن</button>
+            <div id="age-result" class="result-box"></div>
+        </div>
+
+        <div id="password-tool" class="tool-section">
+            <h2>🔒 مولد كلمات المرور القوية</h2>
+            <div class="input-group">
+                <label for="pass-length">طول كلمة المرور (عدد الخانات):</label>
+                <input type="number" id="pass-length" value="12" min="6" max="30">
+            </div>
+            <button onclick="generatePassword()">توليد كلمة مرور</button>
+            <div id="password-result" class="result-box" style="font-family: monospace; letter-spacing: 2px; text-align: center;"></div>
+        </div>
+
+        <div id="text-tool" class="tool-section">
+            <h2>✍️ عداد الحروف والكلمات</h2>
+            <div class="input-group">
+                <label for="text-input">أدخل النص هنا:</label>
+                <textarea id="text-input" rows="5" oninput="analyzeText()" placeholder="اكتب أو الصق نصك هنا..."></textarea>
+            </div>
+            <div id="text-result" class="result-box" style="display: block; background: #f1f5f9; border-right-color: #64748b;">
+                عدد الكلمات: <span id="word-count">0</span> | عدد الحروف: <span id="char-count">0</span>
+            </div>
+        </div>
+
+        <div id="bmi-tool" class="tool-section">
+            <h2>⚖️ حاسبة كتلة الجسم (BMI)</h2>
+            <div class="input-group">
+                <label for="bmi-weight">الوزن (بالكيلوجرام):</label>
+                <input type="number" id="bmi-weight" placeholder="مثال: 75">
+            </div>
+            <div class="input-group">
+                <label for="bmi-height">الطول (بالسنتيمتر):</label>
+                <input type="number" id="bmi-height" placeholder="مثال: 175">
+            </div>
+            <button onclick="calculateBMI()">احسب كتلة الجسم</button>
+            <div id="bmi-result" class="result-box"></div>
+        </div>
+
+        <footer>
+            <p>جميع الحقوق محفوظة © منصة الأدوات الذكية 2026</p>
+        </footer>
     </div>
-</div>
 
-<script>
-function toggleInputs() {
-    const type = document.getElementById("type").value;
+    <script>
+        // دالة التنقل بين الأدوات
+        function openTool(toolId) {
+            const sections = document.querySelectorAll('.tool-section');
+            sections.forEach(section => section.classList.remove('active'));
+            
+            const activeSection = document.getElementById(toolId);
+            activeSection.classList.add('active');
+            
+            activeSection.scrollIntoView({ behavior: 'smooth' });
+        }
 
-    document.getElementById("gregorianInput").style.display = (type === "gregorian") ? "block" : "none";
+        // 1. منطق حاسبة العمر
+        function calculateAge() {
+            const birthDateInput = document.getElementById('birth-date').value;
+            const resultBox = document.getElementById('age-result');
+            
+            if (!birthDateInput) {
+                resultBox.style.display = 'block';
+                resultBox.innerHTML = 'الرجاء اختيار تاريخ ميلاد صحيح.';
+                return;
+            }
 
-    document.getElementById("hYear").style.display =
-    document.getElementById("hMonth").style.display =
-    document.getElementById("hDay").style.display =
-        (type === "hijri") ? "block" : "none";
-}
+            const birthDate = new Date(birthDateInput);
+            const today = new Date();
 
-// تحويل هجري إلى ميلادي (تقريبي)
-function hijriToGregorian(hy, hm, hd) {
-    let days = (hy - 1) * 354 + Math.floor((3 + (11 * hy)) / 30) + (hm - 1) * 29 + hd;
-    let date = new Date(622, 6, 16); // بداية التقويم الهجري
-    date.setDate(date.getDate() + days);
-    return date;
-}
+            let years = today.getFullYear() - birthDate.getFullYear();
+            let months = today.getMonth() - birthDate.getMonth();
+            let days = today.getDate() - birthDate.getDate();
 
-function calculate() {
-    let type = document.getElementById("type").value;
-    let birth;
+            if (days < 0) {
+                months--;
+                days += new Date(today.getFullYear(), today.getMonth(), 0).getDate();
+            }
+            if (months < 0) {
+                years--;
+                months += 12;
+            }
 
-    if (type === "gregorian") {
-        let val = document.getElementById("gregorianInput").value;
-        if (!val) return alert("اختر التاريخ");
-        birth = new Date(val);
-    } else {
-        let y = parseInt(document.getElementById("hYear").value);
-        let m = parseInt(document.getElementById("hMonth").value);
-        let d = parseInt(document.getElementById("hDay").value);
+            resultBox.style.display = 'block';
+            resultBox.innerHTML = `عمرك الحالي هو: <strong>${years}</strong> سنة، و <strong>${months}</strong> شهر، و <strong>${days}</strong> يوم.`;
+        }
 
-        if (!y || !m || !d) return alert("أدخل التاريخ الهجري كامل");
-        birth = hijriToGregorian(y, m, d);
-    }
+        // 2. منطق مولد كلمات المرور
+        function generatePassword() {
+            const length = document.getElementById('pass-length').value;
+            const resultBox = document.getElementById('password-result');
+            const chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+";
+            let password = "";
+            
+            for (let i = 0; i < length; i++) {
+                password += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            
+            resultBox.style.display = 'block';
+            resultBox.innerText = password;
+        }
 
-    let today = new Date();
+        // 3. منطق عداد النصوص
+        function analyzeText() {
+            const text = document.getElementById('text-input').value;
+            const charCount = text.length;
+            const wordCount = text.trim() === "" ? 0 : text.trim().split(/\s+/).length;
+            
+            document.getElementById('char-count').innerText = charCount;
+            document.getElementById('word-count').innerText = wordCount;
+        }
 
-    let years = today.getFullYear() - birth.getFullYear();
-    let months = today.getMonth() - birth.getMonth();
-    let days = today.getDate() - birth.getDate();
+        // 4. منطق حاسبة كتلة الجسم BMI
+        function calculateBMI() {
+            const weight = parseFloat(document.getElementById('bmi-weight').value);
+            const height = parseFloat(document.getElementById('bmi-height').value) / 100;
+            const resultBox = document.getElementById('bmi-result');
 
-    if (days < 0) {
-        months--;
-        days += new Date(today.getFullYear(), today.getMonth(), 0).getDate();
-    }
+            if (!weight || !height) {
+                resultBox.style.display = 'block';
+                resultBox.innerHTML = 'الرجاء إدخال الوزن والطول بشكل صحيح.';
+                return;
+            }
 
-    if (months < 0) {
-        years--;
-        months += 12;
-    }
+            const bmi = (weight / (height * height)).toFixed(1);
+            let status = "";
 
-    document.getElementById("gResult").innerHTML =
-        "📘 العمر الميلادي:<br>" +
-        years + " سنة، " + months + " شهر، " + days + " يوم";
+            if (bmi < 18.5) status = "نقص في الوزن (نحافة)";
+            else if (bmi >= 18.5 && bmi < 25) status = "وزن مثالي وصحي 👍";
+            else if (bmi >= 25 && bmi < 30) status = "وزن زائد";
+            else status = "سمنة";
 
-    // هجري تقريبي
-    let totalDays = (today - birth) / (1000 * 60 * 60 * 24);
-    let hy = Math.floor(totalDays / 354.367);
-    let rm = totalDays % 354.367;
-    let hm = Math.floor(rm / 29.53);
-    let hd = Math.floor(rm % 29.53);
-
-    document.getElementById("hResult").innerHTML =
-        "🌙 العمر الهجري:<br>" +
-        hy + " سنة، " + hm + " شهر، " + hd + " يوم";
-
-    document.getElementById("result").style.display = "block";
-}
-</script>
-
+            resultBox.style.display = 'block';
+            resultBox.innerHTML = `مؤشر كتلة جسمك هو: <strong>${bmi}</strong> (${status})`;
+        }
+    </script>
 </body>
 </html>
+ 
